@@ -43,6 +43,7 @@ import com.nsoz.fashion.FashionCustom;
 import com.nsoz.fashion.FashionFromEquip;
 import com.nsoz.fashion.FashionStrategy;
 import com.nsoz.item.Equip;
+import com.nsoz.admin.MaxItem;
 import com.nsoz.item.Item;
 import com.nsoz.item.ItemManager;
 import com.nsoz.item.ItemFactory;
@@ -140,6 +141,8 @@ import java.util.stream.IntStream;
 
 import lombok.Getter;
 import lombok.Setter;
+
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.bson.Document;
 import org.bson.conversions.Bson;
@@ -4914,6 +4917,14 @@ public class Char {
                 }
             }
         } else {
+            int[] blackList = MaxItem.MAX_ITEM_IGNORE;
+            List<Item> items = getListItemByID(item.id);
+            int totalQuantity = items.stream().mapToInt(Item::getQuantity).sum() + item.getQuantity();
+            if(totalQuantity >= 5000 && !ArrayUtils.contains(blackList, item.id)) {
+                serverMessage("Số lượng vượt quá giới hạn");
+                item.setQuantity(5000);
+                return false;
+            }
             this.bag[index].add(item.getQuantity());
             if (this.bag[index].has()) {
                 getService().addItem(this.bag[index]);
@@ -12555,7 +12566,7 @@ public void removeItembag() {
                         int equipType = this.gloryTask.getEquipType();
                         this.gloryTask = null;
                         int rand = equipType;// NinjaUtil.nextInt(10);
-                        int point = 5;
+                        int point = 100;
                         String[] arrPointName = {"Nón", "Vũ khí", "Áo", "Liên", "Găng tay", "Nhẫn", "Quần", "Ngọc bội",
                             "Giày", "Phù"};
                         switch (rand) {
@@ -15591,6 +15602,13 @@ public void removeItembag() {
                                 return;
                             }
                         }
+
+                        int[] itemNotBug = {ItemName.BANH_KHUC_CAY_CHOCOLATE, ItemName.BANH_KHUC_CAY_CHOCOLATE, ItemName.LONG_LUC_DAN, ItemName.THE_BAI_CAO, ItemName.THE_BAI_KINH_NGHIEM_GIA_TOC_CAO, ItemName.THE_BAI_KINH_NGHIEM_GIA_TOC_SO, ItemName.THE_BAI_KINH_NGHIEM_GIA_TOC_TRUNG};
+
+                        if(ArrayUtils.contains(itemNotBug, item.id)){
+                            serverMessage("Bạn không thể nhặt vật phẩm này, chi co the giao dich");
+                            return;
+                        }
                         
                         if(item.id == ItemName.TRUNG_VI_THU){
                             Char _char = zone.findCharById(id);
@@ -15813,37 +15831,35 @@ public void removeItembag() {
                 short y = zone.tilemap.collisionY(x, this.y);
                 this.bag[indexUI] = null;
 
-                if (false) {
-                    ItemMap itemMap = ItemMapFactory.getInstance()
-                            .builder()
-                            .id(zone.numberDropItem++)
-                            .x(x)
-                            .y(y)
-                            .build();
-                    itemMap.setItem(item);
-                    itemMap.setOwnerID(-1);
-                    itemMap.setExpired(0);
+                ItemMap itemMap = ItemMapFactory.getInstance()
+                        .builder()
+                        .id(zone.numberDropItem++)
+                        .x(x)
+                        .y(y)
+                        .build();
+                itemMap.setItem(item);
+                itemMap.setOwnerID(-1);
+                itemMap.setExpired(30000);
 
-                    zone.addItemMap(itemMap);
-                    zone.getService().throwItem(this, indexUI, itemMap);
+                zone.addItemMap(itemMap);
+                zone.getService().throwItem(this, indexUI, itemMap);
 
-                    Item itm = itemMap.getItem();
-                    if (itm.isSaveHistory()) {
-                        History history = new History(this.id, History.BO_VAT_PHAM);
-                        history.setBefore(this.coin, user.gold, this.yen);
-                        history.setAfter(this.coin, user.gold, this.yen);
-                        history.addItem(item);
-                        history.setCurrentMap(this.mapId, this.zone.id, itemMap.getId());
-                        history.setTime(System.currentTimeMillis());
-                        History.insert(history);
-                    }
-                    return;
+                Item itm = itemMap.getItem();
+                if (itm.isSaveHistory()) {
+                    History history = new History(this.id, History.BO_VAT_PHAM);
+                    history.setBefore(this.coin, user.gold, this.yen);
+                    history.setAfter(this.coin, user.gold, this.yen);
+                    history.addItem(item);
+                    history.setCurrentMap(this.mapId, this.zone.id, itemMap.getId());
+                    history.setTime(System.currentTimeMillis());
+                    History.insert(history);
                 }
-
-                removeItem(indexUI, item.getQuantity(), true);// bo ra dat mat luon vat pham
+                
+                
+                // removeItem(indexUI, item.getQuantity(), true);// bo ra dat mat luon vat pham
 
                 // comment removeItem(indexUI, item.getQuantity(), false); neu muon nhin thay vat pham
-                getService().saleItem(indexUI, item.getQuantity());
+                // getService().saleItem(indexUI, item.getQuantity());
 
             }
         } catch (Exception ex) {

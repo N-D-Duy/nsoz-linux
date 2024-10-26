@@ -49,7 +49,7 @@ public class TrungThu extends Event {
 
     public TrungThu() {
         setId(Event.TRUNG_THU);
-        endTime.set(2023, 10, 1, 1, 37, 59);
+        endTime.set(2024, 10, 1, 1, 37, 59);
         itemsThrownFromMonsters.add(1, ItemName.TRUNG);
         itemsThrownFromMonsters.add(2, ItemName.BOT_MI);
         itemsThrownFromMonsters.add(1, ItemName.HAT_SEN);

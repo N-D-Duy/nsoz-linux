@@ -374,9 +374,7 @@ public abstract class Event {
 
         if (rc != null) {
             for (int i = 0; i < number; i++) {
-                if (!p.duatop){
-                    p.addExp(8000000);
-                }
+                p.addExp(8000000);
                 int itemId = rc.next();
                 Item itm = ItemFactory.getInstance().newItem(itemId);
                 Item itmUsed = ItemFactory.getInstance().newItem(itemRequire[0][0]); // item used
@@ -439,7 +437,7 @@ public abstract class Event {
     }
 
     public boolean isEnded() {
-        return endTime.getTime().getTime() - System.currentTimeMillis() <= 0;
+        return false;
     }
 
     public void initRandomItem() {

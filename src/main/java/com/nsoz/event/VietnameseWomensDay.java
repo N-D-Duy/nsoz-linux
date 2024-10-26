@@ -33,7 +33,7 @@ public class VietnameseWomensDay extends Event {
 
     public VietnameseWomensDay() {
         setId(Event.NGAY_PHU_NU_VIET_NAM);
-        endTime.set(2023, 10, 18, 23, 59, 59);
+        endTime.set(2024, 10, 18, 23, 59, 59);
         itemsThrownFromMonsters.add(1, ItemName.HOA_HONG_DO);
         keyEventPoint.add(EventPoint.DIEM_TIEU_XAI);
     }

@@ -112,9 +112,9 @@ public class RandomItem {
         LANG_CO.add(1, ItemName.DONG_CO_V_POWER);
         LANG_CO.add(1, ItemName.DINH_VI);
         LANG_CO.add(1, ItemName.BINH_NITRO);
-        LANG_CO.add(3, ItemName.CHUYEN_TINH_THACH);
-        LANG_CO.add(3, ItemName.TU_TINH_THACH_SO_CAP);
-        LANG_CO.add(2, ItemName.TU_TINH_THACH_TRUNG_CAP);
+        LANG_CO.add(5, ItemName.CHUYEN_TINH_THACH);
+        LANG_CO.add(10, ItemName.TU_TINH_THACH_SO_CAP);
+        LANG_CO.add(5, ItemName.TU_TINH_THACH_TRUNG_CAP);
         LANG_CO.add(0.5, ItemName.TU_TINH_THACH_CAO_CAP);
         LANG_CO.add(2, ItemName.LUC_THANH_HOA);
         LANG_CO.add(3, ItemName.TU_LINH_LIEN_HOA);
@@ -135,8 +135,8 @@ public class RandomItem {
         LANG_TRUYEN_THUYET.add(1, ItemName.TUONG_LINH_THAO);
         LANG_TRUYEN_THUYET.add(1, ItemName.THONG_LINH_THAO);
         LANG_TRUYEN_THUYET.add(3, ItemName.CHUYEN_TINH_THACH);
-        LANG_TRUYEN_THUYET.add(1, ItemName.TU_TINH_THACH_TRUNG_CAP);
-        LANG_TRUYEN_THUYET.add(1, ItemName.TU_TINH_THACH_SO_CAP);
+        LANG_TRUYEN_THUYET.add(2, ItemName.TU_TINH_THACH_TRUNG_CAP);
+        LANG_TRUYEN_THUYET.add(5, ItemName.TU_TINH_THACH_SO_CAP);
         LANG_TRUYEN_THUYET.add(0.3, ItemName.TU_TINH_THACH_CAO_CAP);
         LANG_TRUYEN_THUYET.add(30, ItemName.BINH_HP_CAO_CAP);
         LANG_TRUYEN_THUYET.add(30, ItemName.BINH_MP_CAO_CAP);
@@ -168,17 +168,16 @@ public class RandomItem {
         VDMQ.add(6, ItemName.THI_LUYEN_THIEP);
         VDMQ.add(7, ItemName.DINH_VI);
         VDMQ.add(7, ItemName.BINH_NITRO);
-        VDMQ.add(1, ItemName.CHUYEN_TINH_THACH);
-        VDMQ.add(2, ItemName.TU_TINH_THACH_SO_CAP);
-        VDMQ.add(2, ItemName.TU_TINH_THACH_TRUNG_CAP);
+        VDMQ.add(6, ItemName.CHUYEN_TINH_THACH);
+        VDMQ.add(10, ItemName.TU_TINH_THACH_SO_CAP);
+        VDMQ.add(6, ItemName.TU_TINH_THACH_TRUNG_CAP);
         VDMQ.add(6, ItemName.LUC_THANH_HOA);
-        VDMQ.add(4, ItemName.TU_LINH_LIEN_HOA);
-        VDMQ.add(4, ItemName.LINH_LANG_HO_DIEP);
+        VDMQ.add(10, ItemName.TU_LINH_LIEN_HOA);
+        VDMQ.add(10, ItemName.LINH_LANG_HO_DIEP);
         VDMQ.add(2, ItemName.SACH_VO_CONG_KAGE_BUNSHIN);
         VDMQ.add(16, ItemName.PHAN_THAN_LENH);
-        VDMQ.add(40, ItemName.DA_CAP_5);
 
-         ITEM.add(1, ItemName.DA_CAP_6);
+        ITEM.add(1, ItemName.DA_CAP_6);
         ITEM.add(1, ItemName.DA_CAP_5);
         ITEM.add(1, ItemName.DA_CAP_7);
         ITEM.add(1, ItemName.PHUC_NANG_NHAN_GIA);
@@ -269,26 +268,26 @@ public class RandomItem {
         BOSS.add(0.1, ItemName.NHAN10x);
         BOSS.add(0.1, ItemName.LIEn10x);
 
-       // Vùng đất ma quỷ --- đang nhân 10 mỗi item trừ đá 5
-        VDMQ.add(0.5, ItemName.THU_TRANG);
-        VDMQ.add(0.5, ItemName.GIAP_THU);
-        VDMQ.add(0.5, ItemName.YEN2);
-        VDMQ.add(0.5, ItemName.DAY_CUONG);
-        VDMQ.add(0.5, ItemName.BO_DIEU_KHIEN);
-        VDMQ.add(0.5, ItemName.DONG_CO_V_POWER);
-        VDMQ.add(5, ItemName.THI_LUYEN_THIEP);
-        VDMQ.add(0.5, ItemName.DINH_VI);
-        VDMQ.add(0.5, ItemName.BINH_NITRO);
-        VDMQ.add(0.5, ItemName.CHUYEN_TINH_THACH);
-        VDMQ.add(0.5, ItemName.TU_TINH_THACH_SO_CAP);
-        VDMQ.add(0.5, ItemName.TU_TINH_THACH_TRUNG_CAP);
-        VDMQ.add(0.5, ItemName.LUC_THANH_HOA);
-        VDMQ.add(0.5, ItemName.TU_LINH_LIEN_HOA);
-        VDMQ.add(0.5, ItemName.LINH_LANG_HO_DIEP);
-        VDMQ.add(0.5, ItemName.SACH_VO_CONG_KAGE_BUNSHIN);
-        VDMQ.add(16, ItemName.PHAN_THAN_LENH);
-        VDMQ.add(40, ItemName.DA_CAP_7);
-        VDMQ.add(40, ItemName.DA_CAP_8);
+    //    // Vùng đất ma quỷ --- đang nhân 10 mỗi item trừ đá 5
+    //     VDMQ.add(0.5, ItemName.THU_TRANG);
+    //     VDMQ.add(0.5, ItemName.GIAP_THU);
+    //     VDMQ.add(0.5, ItemName.YEN2);
+    //     VDMQ.add(0.5, ItemName.DAY_CUONG);
+    //     VDMQ.add(0.5, ItemName.BO_DIEU_KHIEN);
+    //     VDMQ.add(0.5, ItemName.DONG_CO_V_POWER);
+    //     VDMQ.add(5, ItemName.THI_LUYEN_THIEP);
+    //     VDMQ.add(0.5, ItemName.DINH_VI);
+    //     VDMQ.add(0.5, ItemName.BINH_NITRO);
+    //     VDMQ.add(0.5, ItemName.CHUYEN_TINH_THACH);
+    //     VDMQ.add(0.5, ItemName.TU_TINH_THACH_SO_CAP);
+    //     VDMQ.add(0.5, ItemName.TU_TINH_THACH_TRUNG_CAP);
+    //     VDMQ.add(0.5, ItemName.LUC_THANH_HOA);
+    //     VDMQ.add(0.5, ItemName.TU_LINH_LIEN_HOA);
+    //     VDMQ.add(0.5, ItemName.LINH_LANG_HO_DIEP);
+    //     VDMQ.add(0.5, ItemName.SACH_VO_CONG_KAGE_BUNSHIN);
+    //     VDMQ.add(16, ItemName.PHAN_THAN_LENH);
+    //     VDMQ.add(40, ItemName.DA_CAP_7);
+    //     VDMQ.add(40, ItemName.DA_CAP_8);
 // Boss vùng đất ma quỷ
         BOSS_VDMQ.add(160, ItemName.DA_CAP_8);
         BOSS_VDMQ.add(150, ItemName.DA_CAP_9);

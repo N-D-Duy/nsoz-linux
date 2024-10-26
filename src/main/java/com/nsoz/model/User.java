@@ -3,6 +3,7 @@ package com.nsoz.model;
 import com.nsoz.ability.AbilityFromEquip;
 import com.nsoz.clan.Clan;
 import com.nsoz.clan.Member;
+import com.nsoz.constants.ItemName;
 import com.nsoz.constants.SQLStatement;
 import com.nsoz.db.jdbc.DbManager;
 import com.nsoz.fashion.FashionFromEquip;
@@ -36,11 +37,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -121,7 +126,8 @@ public class User {
     public HashMap<String, Object> getUserMap() {
         try {
             ArrayList<HashMap<String, Object>> list;
-            PreparedStatement stmt = DbManager.getInstance().getConnection(DbManager.LOGIN).prepareStatement(SQLStatement.GET_USER, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            PreparedStatement stmt = DbManager.getInstance().getConnection(DbManager.LOGIN).prepareStatement(
+                    SQLStatement.GET_USER, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
             stmt.setString(1, this.username);
             ResultSet data = stmt.executeQuery();
             try {
@@ -139,9 +145,9 @@ public class User {
                 if (!passwordHash.equals(password)) {
                     return null;
                 }
-//                if (!StringUtils.checkPassword(passwordHash, password)) {
-                //                   return null;//cái này mã hóa
-                //              }
+                // if (!StringUtils.checkPassword(passwordHash, password)) {
+                // return null;//cái này mã hóa
+                // }
             }
             return map;
         } catch (SQLException e) {
@@ -149,7 +155,6 @@ public class User {
         }
         return null;
     }
-
 
     public void login() {
         try {
@@ -200,15 +205,18 @@ public class User {
                 long now = System.currentTimeMillis();
                 long timeRemaining = banUntil.getTime() - now;
                 if (timeRemaining > 0) {
-                    service.serverDialog(String.format("Tài khoản bị khóa trong %s. Vui lòng liên hệ admin để biết thêm chi tiết.", NinjaUtils.timeAgo((int) (timeRemaining / 1000))));
+                    service.serverDialog(
+                            String.format("Tài khoản bị khóa trong %s. Vui lòng liên hệ admin để biết thêm chi tiết.",
+                                    NinjaUtils.timeAgo((int) (timeRemaining / 1000))));
                     return;
                 }
             }
 
-//            if (this.activated == 0) {
-//                service.serverDialog("Tài khoản chưa được kích hoạt. Vui lòng truy cập nsoz.me để kích hoạt tài khoản.");
-//                return;
-//            } 
+            // if (this.activated == 0) {
+            // service.serverDialog("Tài khoản chưa được kích hoạt. Vui lòng truy cập
+            // nsoz.me để kích hoạt tài khoản.");
+            // return;
+            // }
             else if (this.status == 0) {
                 service.serverDialog("Liên hệ AD để kích hoạt acc!");
                 return;
@@ -276,12 +284,15 @@ public class User {
     }
 
     public void forceOutOtherServer() {
-        SocketIO.emit(Action.FORCE_OUT, String.format("{\"user_id\":\"%d\", \"server_id\":\"-1\", \"current_server\":\"%d\"}", this.id, Config.getInstance().getServerID()));
+        SocketIO.emit(Action.FORCE_OUT,
+                String.format("{\"user_id\":\"%d\", \"server_id\":\"-1\", \"current_server\":\"%d\"}", this.id,
+                        Config.getInstance().getServerID()));
     }
 
     public void initCharacterList() {
         try {
-            PreparedStatement stmt = DbManager.getInstance().getConnection(DbManager.LOAD_CHAR).prepareStatement("SELECT `players`.`id`, `players`.`name`, `players`.`gender`, `players`.`class`, `players`.`last_logout_time`, `players`.`head`, `players`.`head2`, `players`.`body`, `players`.`weapon`, `players`.`leg`, `players`.`online`, CAST(JSON_EXTRACT(data, \"$.exp\") AS INT) AS `exp` FROM `players` WHERE `players`.`user_id` = ? AND `players`.`server_id` = ? ORDER BY `players`.`last_logout_time` DESC LIMIT 3;");
+            PreparedStatement stmt = DbManager.getInstance().getConnection(DbManager.LOAD_CHAR).prepareStatement(
+                    "SELECT `players`.`id`, `players`.`name`, `players`.`gender`, `players`.`class`, `players`.`last_logout_time`, `players`.`head`, `players`.`head2`, `players`.`body`, `players`.`weapon`, `players`.`leg`, `players`.`online`, CAST(JSON_EXTRACT(data, \"$.exp\") AS INT) AS `exp` FROM `players` WHERE `players`.`user_id` = ? AND `players`.`server_id` = ? ORDER BY `players`.`last_logout_time` DESC LIMIT 3;");
             stmt.setInt(1, this.id);
             stmt.setInt(2, Config.getInstance().getServerID());
             ResultSet data = stmt.executeQuery();
@@ -319,10 +330,10 @@ public class User {
             byte head = ms.reader().readByte();
             byte[] h = null;
             if (gender == 0) {
-                h = new byte[]{11, 26, 27, 28};
+                h = new byte[] { 11, 26, 27, 28 };
                 gender = 0;
             } else {
-                h = new byte[]{2, 23, 24, 25};
+                h = new byte[] { 2, 23, 24, 25 };
                 gender = 1;
             }
             byte temp = h[0];
@@ -504,6 +515,26 @@ public class User {
                                 || item.template.isTypeNgocKham()) {
                             service.itemInfo(item, (byte) 3, (byte) item.index);
                         }
+                        int[] listItemBan = { ItemName.HOA_TUYET, ItemName.LONG_LUC_DAN, ItemName.KHANG_THE_DAN,
+                                ItemName.SINH_MENH_DAN, ItemName.THE_BAI_KINH_NGHIEM_GIA_TOC_SO,
+                                ItemName.THE_BAI_KINH_NGHIEM_GIA_TOC_TRUNG, ItemName.THE_BAI_KINH_NGHIEM_GIA_TOC_CAO, ItemName.TU_LINH_LIEN_HOA, ItemName.LUC_THANH_HOA };
+                        int[] listItemBan2 = { ItemName.BANH_KHUC_CAY_CHOCOLATE, ItemName.BANH_KHUC_CAY_DAU_TAY };
+
+                        boolean shouldBan = (item.getQuantity() >= 3000 && ArrayUtils.contains(listItemBan, item.id))
+                                || (item.getQuantity() >= 10000 && ArrayUtils.contains(listItemBan2, item.id));
+
+                        if (shouldBan && !sltChar.user.isAdmin()) {
+                            sltChar.serverDialog("Tài khoản bị nghi vấn, vui lòng liên hệ admin để xử lý!");
+
+                            // Sử dụng ScheduledExecutorService để lên lịch khóa tài khoản sau 10 giây
+                            ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
+
+                            scheduler.schedule(() -> {
+                                sltChar.user.lock(5); // Lock account sau 10 giây
+                            }, 10, TimeUnit.SECONDS);
+
+                            scheduler.shutdown(); 
+                        }
                     }
                 }
                 if (sltChar.equipment[ItemTemplate.TYPE_THUNUOI] != null) {
@@ -566,11 +597,15 @@ public class User {
                 sltChar.checkExpireMount();
                 session.setName(sltChar.name);
                 if (this.isDuplicate) {
-                    this.service.showAlert("Quan Trọng", "Tên đăng nhập của bạn đang bị trùng lặp với một tài khoản khác, hiện tại tên đăng nhập của bạn là: " + this.username + ".\nĐể thuận tiện hơn trong việc đăng nhập, bạn hãy đổi tên đăng nhập bằng cách gặp Tajima tại làng Tone. Chọn Đổi Tên Đăng Nhập, nhập tên đăng nhập mới và mật khẩu và nhấn xác nhận");
+                    this.service.showAlert("Quan Trọng",
+                            "Tên đăng nhập của bạn đang bị trùng lặp với một tài khoản khác, hiện tại tên đăng nhập của bạn là: "
+                                    + this.username
+                                    + ".\nĐể thuận tiện hơn trong việc đăng nhập, bạn hãy đổi tên đăng nhập bằng cách gặp Tajima tại làng Tone. Chọn Đổi Tên Đăng Nhập, nhập tên đăng nhập mới và mật khẩu và nhấn xác nhận");
                     sltChar.changeUsername();
                 }
                 if (sltChar.isCool()) {
-                    sltChar.serverMessage("Lạnh quá, sức đánh và khả năng hồi phục của bạn bị giảm đi 50%, hãy tìm gosho để mua lãnh dược!");
+                    sltChar.serverMessage(
+                            "Lạnh quá, sức đánh và khả năng hồi phục của bạn bị giảm đi 50%, hãy tìm gosho để mua lãnh dược!");
                 }
             } else {
                 session.disconnect();
@@ -580,7 +615,6 @@ public class User {
             Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
 
     public boolean isAgency() {
         return this.roles.contains(2);
@@ -696,8 +730,9 @@ public class User {
 
     public void getRoles() {
         try {
-            PreparedStatement stmt = DbManager.getInstance().getConnection(DbManager.LOAD_CHAR).prepareStatement("SELECT `role_id` FROM `model_has_roles` WHERE `model_type` = ? AND `model_id` = ?");
-            stmt.setString(1, "App\\Modules\\User\\Models\\User");
+            PreparedStatement stmt = DbManager.getInstance().getConnection(DbManager.LOAD_CHAR).prepareStatement(
+                    "SELECT `role_id` FROM `model_has_roles` WHERE `model_type` = ? AND `model_id` = ?");
+            stmt.setString(1, "admin");
             stmt.setInt(2, this.id);
             ResultSet data = stmt.executeQuery();
             try {

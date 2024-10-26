@@ -1,0 +1,32 @@
+# Ignore Maven/Gradle build directories
+target/
+build/
+
+# Ignore dependency files (if applicable)
+*.jar
+*.war
+
+# Ignore IDE configuration files
+*.idea/
+*.vscode/
+*.project
+*.classpath
+*.settings/
+
+# Ignore test files
+test/
+
+# Ignore local environment configuration
+*.env
+.env.*
+
+# Ignore logs and temporary files
+*.log
+*.tmp
+*.bak
+
+# Ignore Git and version control files
+.git/
+.gitignore
+.github/
+

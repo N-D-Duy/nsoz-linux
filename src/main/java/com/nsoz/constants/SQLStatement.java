@@ -19,7 +19,7 @@ public class SQLStatement {
     public static final String UPDATE_GIFT_CODE = "UPDATE `gift_codes` SET `status` = 1, `updated_at` = ? WHERE `id` = ? LIMIT 1;";
     public static final String INSERT_USED_GIFT_CODE = "INSERT INTO `gift_code_histories`(`player_id`,`user_id`, `gift_code`, `updated_at`) VALUES (?, ?, ?, ?)";
     public static final String CHECK_EXIST_USED_GIFT_CODE = "SELECT * FROM `gift_code_histories` WHERE `gift_code` = ? AND (`player_id` = ? OR `user_id` = ?) LIMIT 1;";
-    public static final String GET_USER = "SELECT `status`, `id`, `luong`, `last_attendance_at`, `password`, `ip_address`, `level_reward`, `role`, `efffan`, `effvip`, `efftop`, `effytb`, `effdg`, `effygt`, `effydc`, `nhanmocnap`, `effydh`, `online`, `ban_until`, `activated` FROM `users` WHERE `username` = ?;";
+    public static final String GET_USER = "SELECT * FROM `users` WHERE `username` = ?;";
     public static final String GET_USER_ROLES = "SELECT * FROM `model_has_roles` WHERE `model_id` = ?;";
     public static final String CHECK_USERNAME = "SELECT * FROM `users` WHERE `username` = ? LIMIT 1;";
     public static final String GET_ID_USERNAME = "SELECT `id` FROM `users` WHERE `username` = ? LIMIT 1;";

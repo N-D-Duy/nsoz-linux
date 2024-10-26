@@ -29,7 +29,7 @@ public class InternationalWomensDay extends Event {
 
     public InternationalWomensDay() {
         setId(Event.WOMENS_DAY);
-        endTime.set(2023, 9, 18, 23, 59, 59);
+        endTime.set(2024, 9, 18, 23, 59, 59);
         itemsThrownFromMonsters.add(1, ItemName.HOA_HONG_DO);
         keyEventPoint.add(EventPoint.DIEM_TIEU_XAI);
         

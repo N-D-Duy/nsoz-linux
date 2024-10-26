@@ -57,7 +57,7 @@ public class LunarNewYear extends Event {
 
     public LunarNewYear() {
         setId(Event.LUNAR_NEW_YEAR);
-        endTime.set(2024, 1, 18, 23, 59, 59);
+        endTime.set(2025, 1, 18, 23, 59, 59);
         itemsThrownFromMonsters.add(5, ItemName.NEP);
         itemsThrownFromMonsters.add(3, ItemName.LA_DONG);
         itemsThrownFromMonsters.add(3, ItemName.DAU_XANH2);

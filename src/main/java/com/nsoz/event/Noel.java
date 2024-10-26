@@ -61,7 +61,7 @@ public class Noel extends Event {
 
     public Noel() {
         setId(Event.NOEL);
-        endTime.set(2023, 8, 18, 23, 59, 59);
+        endTime.set(2024, 12, 18, 23, 59, 59);
         itemsThrownFromMonsters.add(5, ItemName.BO);
         itemsThrownFromMonsters.add(5, ItemName.KEM);
         itemsThrownFromMonsters.add(5, ItemName.DUONG_BOT);
@@ -117,7 +117,7 @@ public class Noel extends Event {
         ZoneId currentZone = ZoneId.of("Asia/Ho_Chi_Minh");
         ZonedDateTime zonedNow = ZonedDateTime.of(localNow, currentZone);
         start = zonedNow.withMonth(7).withDayOfMonth(23).withHour(2).withMinute(2).withSecond(0);
-        end = zonedNow.withMonth(8).withDayOfMonth(18).withHour(23).withMinute(59).withSecond(59);
+        end = zonedNow.withMonth(12).withDayOfMonth(18).withHour(23).withMinute(59).withSecond(59);
         if (zonedNow.isAfter(start) && zonedNow.isBefore(end)) {
             start = zonedNow.plusMinutes(5);// thời gian khởi động server
         }

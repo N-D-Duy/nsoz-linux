@@ -1,0 +1,20 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: duynguyen03/nsoz:v3
+    restart: always
+    container_name: nsoz
+    volumes:
+      - .:/app
+    ports:
+      - "14444:14444"
+    stdin_open: true # Giúp bạn tương tác với stdin
+    tty: true # Giúp bạn tương tác với tty
+    networks:
+      - my-network
+
+networks:
+  my-network:
+    external: true

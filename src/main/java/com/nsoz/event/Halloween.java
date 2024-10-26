@@ -60,7 +60,7 @@ public class Halloween extends Event {
 
         setId(Event.HALLOWEEN);
 
-        endTime.set(2023, 11, 18, 23, 59, 59);
+        endTime.set(2024, 11, 18, 23, 59, 59);
 
         keyEventPoint.add(EventPoint.DIEM_TIEU_XAI);
         keyEventPoint.add(TOP_DEVIL_BOX);
